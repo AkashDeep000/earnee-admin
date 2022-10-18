@@ -82,7 +82,7 @@ export default function Tool() {
 Name: {" "} {payment["@expand"].profile.name}
             </p>
   <p className="abcd">
-Phone No: {" "} {payment["@expand"].profile.number}
+Phone No: {" "} {payment["@expand"].profile.phone}
             </p>
   <p className="abcd">
 Profile ID: {" "} {payment["@expand"].profile.id}
