@@ -11,6 +11,8 @@ import axios from "axios"
 export default function Tool() {
   const [profileId,
     setProfileId] = useState("")
+  const [transactionId,
+    setTransactionId] = useState("")
   const [activePay,
     setActivePay] = useState("")
   const [approveStatus,
@@ -39,13 +41,19 @@ export default function Tool() {
   }
 
   const handleApprove = async () => {
+    if (transactionId.length !== 12) {
+      alert("transactionId must be 12 charecter long")
+      return
+    }
+    
     try {
       setApproveStatus("loading")
       const approve = await axios({
         method: "post",
         url: `${import.meta.env.VITE_API_URL}/pay-approve/${activePay}/?token=${pb.authStore.token}`,
         data: {
-          paymentId: activePay
+          paymentId: activePay,
+          transactionId
         },
       });
       setApproveStatus("success")
@@ -99,14 +107,17 @@ package: {" "} {payment["@expand"].package.name}
                 src={pb.records.getFileUrl(payment, payment.screenshoot1)} />
   <img className="w-full border"
               src={pb.records.getFileUrl(payment, payment.screenshoot2)} />
+                   <input className="formInput" type="text" value={transactionId}
+            placeholder="Transaction Id"
+            onChange={() => setTransactionId(event.target.value)} />
                   <button
-              onClick={handleApprove}
-              className="bg-indigo-500 text-white rounded px-3 py-2">
+            onClick={handleApprove}
+            className="bg-indigo-500 text-white rounded px-3 py-2">
  {approveStatus === "loading" ? "Approving...": approveStatus === "success" ? "Approved": "Approve" } < /button> < /div >
               }
-            </div>
           </div>
-        )
+        </div>
+      )
         })
 } < />
 } < />
